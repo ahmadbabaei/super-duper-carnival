@@ -1,0 +1,83 @@
+# Variables
+BOX="packer_kubernetes_focal"
+USER="anisa"
+PASSWORD="qazwsx"
+PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5pXbYqJm3uwYndxwDf/v09Aqzc6++/fYM8FplsjaC83JZj8/iQrSY9+sszYOYz8ijq3aXyCDph5F9n46E5PoYCA4rOOi8uqsJGpCJRyrEjJW+QqJc2TUxrppqPF0x3juXTSwaVChv/pkyJhFZKaBig/kTW019qjtEa1gew59sprBK9nqGmwsqb1Ilbr/eNvJi8QayYineuZvUrh4tWkzZ3Nk1wVUsq+1qgRXTUeRjYj4IOAqDSgqXbgVZ5CCvVsUoD5gNYmjl1jrl8b7iqyXYLs0Xk+LmEb9NCbhnzKHRFz1froa35EGlZpi70udKlPjKDtSRWccPwjV7wueeYNQt"
+PRIVATE_INTERFACE_NAME="enp0s8"
+IP_NW = "192.168.100."
+
+MASTER_IP_START = 10
+MASTER_COUNT = 1
+MASTER_NAME = "kubemaster"
+MASTER_MEMORY_MB = "2048"
+MASTER_CPU_COUNT = "2"
+
+WORKER_IP_START = 50
+WORKER_COUNT = 2
+WORKER_NAME = "kubeworker"
+WORKER_MEMORY_MB = "2048"
+WORKER_CPU_COUNT = "2"
+
+# Environment variables
+ENV["LC_ALL"] = "en_US.UTF-8"
+
+Vagrant.configure("2") do |config|
+    config.vm.box = BOX
+    config.ssh.forward_agent = true
+    config.vm.provision "setup-hosts", :type => "shell", :path => "scripts/setup-hosts.sh" do |s|
+        s.env = {
+            PRIVATE_INTERFACE_NAME: PRIVATE_INTERFACE_NAME,
+            IP_NW: IP_NW,
+            MASTER_IP_START: MASTER_IP_START,
+            MASTER_COUNT: MASTER_COUNT,
+            MASTER_NAME: MASTER_NAME,
+            WORKER_IP_START: WORKER_IP_START,
+            WORKER_COUNT: WORKER_COUNT,
+            WORKER_NAME: WORKER_NAME
+        }
+    end
+    config.vm.provision "setup-password", :type => "shell", :path => "scripts/setup-password.sh" do |s|
+        s.env = {
+            USER: USER,
+            PASSWORD: PASSWORD
+        }
+    end
+    config.vm.provision "setup-ssh", :type => "shell", :path => "scripts/setup-ssh.sh" do |s|
+        s.env = {
+            USER: USER,
+            PUBLIC_KEY: PUBLIC_KEY
+        }
+    end
+
+    # Provision Master Node
+    (1..MASTER_COUNT).each do |i|
+        config.vm.define "#{MASTER_NAME}-#{i}" do |master|
+            master.vm.network :private_network,
+                ip: IP_NW + "#{MASTER_IP_START + i}",
+                auto_config: true
+            master.vm.hostname = "#{MASTER_NAME}-#{i}"
+            master.vm.provider "virtualbox" do |virtualbox|
+                virtualbox.name = "#{MASTER_NAME}-#{i}"
+                virtualbox.memory = MASTER_MEMORY_MB
+                virtualbox.cpus = MASTER_CPU_COUNT
+                virtualbox.gui = false
+            end
+        end
+    end
+
+    # Provision Worker Nodes
+    (1..WORKER_COUNT).each do |i|
+        config.vm.define "#{WORKER_NAME}-#{i}" do |worker|
+            worker.vm.network :private_network,
+                ip: IP_NW + "#{WORKER_IP_START + i}",
+                auto_config: true
+            worker.vm.hostname = "#{WORKER_NAME}-#{i}"
+            worker.vm.provider :virtualbox do |virtualbox|
+                virtualbox.name = "#{WORKER_NAME}-#{i}"
+                virtualbox.memory = WORKER_MEMORY_MB
+                virtualbox.cpus = WORKER_CPU_COUNT
+                virtualbox.gui = false
+            end
+        end
+    end
+end
