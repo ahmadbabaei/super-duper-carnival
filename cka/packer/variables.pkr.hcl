@@ -10,12 +10,12 @@ variable "disk_size" {
 
 variable "cpu" {
   type =  number
-  default = 3
+  default = 2
 }
 
 variable "memory" {
   type =  number
-  default = 4096
+  default = 2048
 }
 
 variable "ssh_username" {

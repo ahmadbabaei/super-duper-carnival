@@ -1,5 +1,5 @@
 # Variables
-BOX="packer_kubernetes_focal"
+BOX="ubuntu20.04-Kubernetes1.18.12"
 USER="anisa"
 PASSWORD="qazwsx"
 PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5pXbYqJm3uwYndxwDf/v09Aqzc6++/fYM8FplsjaC83JZj8/iQrSY9+sszYOYz8ijq3aXyCDph5F9n46E5PoYCA4rOOi8uqsJGpCJRyrEjJW+QqJc2TUxrppqPF0x3juXTSwaVChv/pkyJhFZKaBig/kTW019qjtEa1gew59sprBK9nqGmwsqb1Ilbr/eNvJi8QayYineuZvUrh4tWkzZ3Nk1wVUsq+1qgRXTUeRjYj4IOAqDSgqXbgVZ5CCvVsUoD5gNYmjl1jrl8b7iqyXYLs0Xk+LmEb9NCbhnzKHRFz1froa35EGlZpi70udKlPjKDtSRWccPwjV7wueeYNQt"

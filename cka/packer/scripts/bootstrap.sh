@@ -26,8 +26,12 @@ fi
 # Upgrade OS
 {
 	sudo apt-get update
+	sudo apt-get dist-upgrade --yes
 	sudo apt-get upgrade --yes
 }
+
+# Enable SSH with password
+sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
 # Disable swap
 {
