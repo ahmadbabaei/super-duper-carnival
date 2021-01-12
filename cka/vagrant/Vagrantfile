@@ -1,8 +1,9 @@
 # Variables
-BOX="ubuntu20.04-Kubernetes1.18.12"
+BOX="ubuntu-focal-kubernetes-1.18.12"
 USER="anisa"
 PASSWORD="qazwsx"
-PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5pXbYqJm3uwYndxwDf/v09Aqzc6++/fYM8FplsjaC83JZj8/iQrSY9+sszYOYz8ijq3aXyCDph5F9n46E5PoYCA4rOOi8uqsJGpCJRyrEjJW+QqJc2TUxrppqPF0x3juXTSwaVChv/pkyJhFZKaBig/kTW019qjtEa1gew59sprBK9nqGmwsqb1Ilbr/eNvJi8QayYineuZvUrh4tWkzZ3Nk1wVUsq+1qgRXTUeRjYj4IOAqDSgqXbgVZ5CCvVsUoD5gNYmjl1jrl8b7iqyXYLs0Xk+LmEb9NCbhnzKHRFz1froa35EGlZpi70udKlPjKDtSRWccPwjV7wueeYNQt"
+SSH_WITH_PASS="true"
+PUBLIC_KEY=""
 PRIVATE_INTERFACE_NAME="enp0s8"
 IP_NW = "192.168.100."
 
@@ -13,7 +14,7 @@ MASTER_MEMORY_MB = "2048"
 MASTER_CPU_COUNT = "2"
 
 WORKER_IP_START = 50
-WORKER_COUNT = 2
+WORKER_COUNT = 1
 WORKER_NAME = "kubeworker"
 WORKER_MEMORY_MB = "2048"
 WORKER_CPU_COUNT = "2"
@@ -45,6 +46,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "setup-ssh", :type => "shell", :path => "scripts/setup-ssh.sh" do |s|
         s.env = {
             USER: USER,
+            SSH_WITH_PASS: SSH_WITH_PASS,
             PUBLIC_KEY: PUBLIC_KEY
         }
     end

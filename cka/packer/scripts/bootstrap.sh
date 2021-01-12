@@ -5,7 +5,7 @@ set -o pipefail -o nounset -o xtrace -o errexit
 # This script installs docker, kubectl, and minikube
 LOG_FILE=/tmp/bootstrap.log
 USER="${USER:-ubuntu}"
-PASS="${PASS:-}"
+PASS="${PASS:-ubuntu}"
 HOME_DIR="/home/$USER"
 SHELL="/bin/bash"
 KUBE_VERSION="${KUBE_VERSION:-1.18.12}"
@@ -29,9 +29,6 @@ fi
 	sudo apt-get dist-upgrade --yes
 	sudo apt-get upgrade --yes
 }
-
-# Enable SSH with password
-sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
 # Disable swap
 {
