@@ -2,17 +2,30 @@
 
 ## CKA
 
-### VirtualBox
+### Prerequisites
 
-VirtualBox is a prerequisite and should be installed on the host.
+- **Packer** is only required if you want to build a new Box.
+Please look at [Packer section](#packer)
+
+- **Vagrant** is required to build the environment.
+Please look at [Vagrant section](#vagrant)
+
+- **Vagrant** is using **VirtualBox** under-the-hood, so VirtualBox is a prerequisite and should be installed on the host.
 Follow this [link](https://www.virtualbox.org/)
+
+--------------------------------------------
+
 ### Packer
 
 See [README](./packer/README.md)
 
+--------------------------------------------
+
 ### Vagrant
 
 See [README](./vagrant/README.md)
+
+--------------------------------------------
 
 ### Quick Start
 
