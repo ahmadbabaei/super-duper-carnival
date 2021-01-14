@@ -2,6 +2,10 @@
 
 ## CKA
 
+### VirtualBox
+
+VirtualBox is a prerequisite and should be installed on the host.
+Follow this [link](https://www.virtualbox.org/)
 ### Packer
 
 See [README](./packer/README.md)
