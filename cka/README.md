@@ -4,11 +4,11 @@
 
 ### Packer
 
-See [README](./cka/packer/README.md)
+See [README](./packer/README.md)
 
 ### Vagrant
 
-See [README](./cka/vagrant/README.md)
+See [README](./vagrant/README.md)
 
 ### Quick Start
 
